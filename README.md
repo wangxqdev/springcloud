@@ -6,4 +6,4 @@
 5. 字符编码
 6. 注解生效激活
 7. java 编译版本选 8
-8. File Type 过滤
+8. File Type 过滤s
