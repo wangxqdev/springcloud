@@ -19,7 +19,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping
-    public CommonResult<?> create(Payment payment) {
+    public CommonResult<?> create(@RequestBody Payment payment) {
         Long id = paymentService.create(payment);
         if (id > 0) {
             return new CommonResult<>(200, "新增成功", id);
