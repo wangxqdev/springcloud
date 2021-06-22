@@ -12,7 +12,7 @@ spring:
     password: ${mysql.password}
   profiles:
     include:
-      - mac
+      - win
 
 mybatis:
   mapperLocations: classpath:mapper/*.xml
