@@ -86,10 +86,16 @@
                 <version>${lombok.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--commons-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.iot.phoebus</groupId>
+                <artifactId>cloud-api-commons</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
