@@ -3,11 +3,15 @@ package com.iot.phoebus.controller;
 import com.iot.phoebus.entities.CommonResult;
 import com.iot.phoebus.entities.Payment;
 import com.iot.phoebus.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author xinquan.w
@@ -15,10 +19,14 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/payment")
+@Slf4j
 public class PaymentController {
 
     @Resource
     private PaymentService paymentService;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     @Value("${server.port}")
     private Integer serverPort;
@@ -41,5 +49,14 @@ public class PaymentController {
         } else {
             return new CommonResult<>(444, "查询失败", id);
         }
+    }
+
+    @GetMapping("/discovery/client")
+    public CommonResult<?> getDiscoveryClient() {
+        List<String> services = discoveryClient.getServices();
+        services.forEach(log::info);
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        instances.forEach(t -> log.info(t.getInstanceId() + "\t" + t.getHost() + "\t" + t.getPort() + "\t" + t.getUri()));
+        return new CommonResult<>(200, "查询成功", discoveryClient);
     }
 }
