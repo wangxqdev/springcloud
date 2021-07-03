@@ -59,4 +59,9 @@ public class PaymentController {
         instances.forEach(t -> log.info(t.getInstanceId() + "\t" + t.getHost() + "\t" + t.getPort() + "\t" + t.getUri()));
         return new CommonResult<>(200, "查询成功", discoveryClient);
     }
+
+    @GetMapping("/server/port")
+    public Integer getServerPort() {
+        return serverPort;
+    }
 }
