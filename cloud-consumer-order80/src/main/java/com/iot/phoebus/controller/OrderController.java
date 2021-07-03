@@ -2,6 +2,7 @@ package com.iot.phoebus.controller;
 
 import com.iot.phoebus.entities.CommonResult;
 import com.iot.phoebus.entities.Payment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,6 +28,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public CommonResult<?> getPaymentById(@PathVariable("id") String id) {
-        return restTemplate.getForObject(PAYMENT_URL + id, CommonResult.class);
+//        getForObject
+//        return restTemplate.getForObject(PAYMENT_URL + id, CommonResult.class);
+//        getForEntity
+        return restTemplate.getForEntity(PAYMENT_URL + id, CommonResult.class).getBody();
     }
 }
