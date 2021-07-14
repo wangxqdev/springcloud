@@ -3,10 +3,12 @@ package com.iot.phoebus.controller;
 import com.iot.phoebus.entities.CommonResult;
 import com.iot.phoebus.entities.Payment;
 import com.iot.phoebus.service.PaymentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author xinquan.w
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/payment")
+@Slf4j
 public class PaymentController {
 
     @Resource
@@ -44,6 +47,17 @@ public class PaymentController {
 
     @GetMapping("/server/port")
     public Integer getServerPort() {
+        return serverPort;
+    }
+
+    @GetMapping("/feign/timeout")
+    public Integer getServerPortTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            log.warn("InterruptedException.", e);
+        }
+
         return serverPort;
     }
 }

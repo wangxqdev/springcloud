@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public CommonResult<?> getPaymentById(@PathVariable("id") String id) {
+    public CommonResult<?> getPaymentById(@PathVariable("id") Long id) {
 //        getForObject
 //        return restTemplate.getForObject(PAYMENT_URL + id, CommonResult.class);
 //        getForEntity

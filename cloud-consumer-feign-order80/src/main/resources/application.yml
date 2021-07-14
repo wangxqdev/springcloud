@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: cloud-order-service
+    name: cloud-order-feign-service
 
 eureka:
   client:
@@ -22,3 +22,22 @@ eureka:
     lease-renewal-interval-in-seconds: 1
     # Eureka服务端在收到最后一次心跳后等待时间上限，单位为秒(默认是90秒)，超时将剔除服务
     lease-expiration-duration-in-seconds: 2
+
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)(单位：毫秒)
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+
+# feign日志级别
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+
+#单个日志级别
+logging:
+  level:
+    com.iot.phoebus.service.PaymentFeignService: debug
