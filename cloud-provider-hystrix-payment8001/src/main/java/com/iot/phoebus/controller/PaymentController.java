@@ -1,5 +1,7 @@
 package com.iot.phoebus.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ public class PaymentController {
         return response;
     }
 
+    @HystrixCommand(fallbackMethod = "getPaymentByIdFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"))
     @GetMapping("/hystrix/{id}/{timeout}")
     public String getPaymentById(@PathVariable("id") Long id, @PathVariable("timeout") Integer timeout) {
         try {
@@ -34,6 +37,12 @@ public class PaymentController {
 
         String response = Thread.currentThread().getName() + " getPaymentById(id=" + id + ",timeout=" + timeout + ")";
         log.info(response);
+        return response;
+    }
+
+    private String getPaymentByIdFallback(Long id, Integer timeout) {
+        String response = Thread.currentThread().getName() + " getPaymentByIdFallback(id=" + id + ",timeout=" + timeout + ")";
+        log.warn(response);
         return response;
     }
 }
