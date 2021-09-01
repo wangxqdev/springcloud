@@ -26,11 +26,11 @@ public class PaymentController {
         return response;
     }
 
-    @HystrixCommand(fallbackMethod = "getPaymentByIdFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"))
+    @HystrixCommand(fallbackMethod = "getPaymentByIdFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"))
     @GetMapping("/hystrix/{id}/{timeout}")
     public String getPaymentById(@PathVariable("id") Long id, @PathVariable("timeout") Integer timeout) {
         try {
-            TimeUnit.SECONDS.sleep(timeout);
+            TimeUnit.MILLISECONDS.sleep(timeout);
         } catch (InterruptedException e) {
             log.warn("InterruptedException", e);
         }

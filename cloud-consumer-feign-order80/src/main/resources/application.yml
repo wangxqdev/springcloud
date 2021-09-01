@@ -36,6 +36,8 @@ feign:
     config:
       default:
         loggerLevel: full
+  hystrix:
+    enabled: true
 
 #单个日志级别
 logging:
