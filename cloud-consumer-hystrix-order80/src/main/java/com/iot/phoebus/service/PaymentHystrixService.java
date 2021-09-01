@@ -1,5 +1,6 @@
 package com.iot.phoebus.service;
 
+import com.iot.phoebus.service.impl.PaymentHystrixServiceImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2021/9/1
  */
 @RequestMapping("/payment")
-@FeignClient(name = "cloud-payment-hystrix-service")
+@FeignClient(name = "cloud-payment-hystrix-service", fallback = PaymentHystrixServiceImpl.class)
 public interface PaymentHystrixService {
 
     /**

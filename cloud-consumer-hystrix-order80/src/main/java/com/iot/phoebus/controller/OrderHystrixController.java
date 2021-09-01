@@ -19,19 +19,26 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 @RequestMapping("order")
-@DefaultProperties(defaultFallback = "defaultFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500"))
+//@DefaultProperties(defaultFallback = "defaultFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500"))
 public class OrderHystrixController {
 
     @Resource
     private PaymentHystrixService paymentHystrixService;
 
     //    @HystrixCommand(fallbackMethod = "getOrderByIdFallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500"))
-    @HystrixCommand
+//    @HystrixCommand
     @GetMapping("/{id}/{timeout}")
     public String getOrderById(@PathVariable("id") Long id, @PathVariable("timeout") Integer timeout) {
         return paymentHystrixService.getPaymentById(id, timeout);
     }
 
+    /**
+     * 单个 fallback
+     *
+     * @param id      Long
+     * @param timeout Integer
+     * @return String
+     */
     private String getOrderByIdFallback(Long id, Integer timeout) {
         String response = Thread.currentThread().getName() + " getOrderByIdFallback(id=" + id + ",timeout=" + timeout + ")";
         log.warn(response);
@@ -39,7 +46,7 @@ public class OrderHystrixController {
     }
 
     /**
-     * 默认无参
+     * 全局 fallback, 默认无参
      *
      * @return String
      */
